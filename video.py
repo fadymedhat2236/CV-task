@@ -186,7 +186,7 @@ def run_inference_for_single_image(image, graph):
   return output_dict
 
 
-# In[10]:
+# In[ ]:
 
 
 def analyze_img(image_np):

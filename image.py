@@ -6,7 +6,7 @@
 
 # # Imports
 
-# In[ ]:
+# In[58]:
 
 
 import numpy as np
@@ -33,7 +33,7 @@ if StrictVersion(tf.__version__) < StrictVersion('1.9.0'):
 
 # ## Env setup
 
-# In[ ]:
+# In[59]:
 
 
 # This is needed to display the images.
@@ -43,7 +43,7 @@ get_ipython().magic(u'matplotlib inline')
 # ## Object detection imports
 # Here are the imports from the object detection module.
 
-# In[ ]:
+# In[60]:
 
 
 from utils import label_map_util
@@ -59,7 +59,7 @@ from utils import visualization_utils as vis_util
 # 
 # By default we use an "SSD with Mobilenet" model here. See the [detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md) for a list of other models that can be run out-of-the-box with varying speeds and accuracies.
 
-# In[ ]:
+# In[61]:
 
 
 # What model to download.
@@ -74,23 +74,17 @@ PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
 PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
 
 
-# ## Download Model
+# 
 
 # In[ ]:
 
 
-opener = urllib.request.URLopener()
-opener.retrieve(DOWNLOAD_BASE + MODEL_FILE, MODEL_FILE)
-tar_file = tarfile.open(MODEL_FILE)
-for file in tar_file.getmembers():
-  file_name = os.path.basename(file.name)
-  if 'frozen_inference_graph.pb' in file_name:
-    tar_file.extract(file, os.getcwd())
+
 
 
 # ## Load a (frozen) Tensorflow model into memory.
 
-# In[ ]:
+# In[62]:
 
 
 detection_graph = tf.Graph()
@@ -105,7 +99,7 @@ with detection_graph.as_default():
 # ## Loading label map
 # Label maps map indices to category names, so that when our convolution network predicts `5`, we know that this corresponds to `airplane`.  Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
 
-# In[ ]:
+# In[63]:
 
 
 category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
@@ -113,7 +107,7 @@ category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABE
 
 # ## Helper code
 
-# In[ ]:
+# In[64]:
 
 
 def load_image_into_numpy_array(image):
@@ -124,21 +118,18 @@ def load_image_into_numpy_array(image):
 
 # # Detection
 
-# In[ ]:
+# In[65]:
 
 
-# For the sake of simplicity we will use only 2 images:
-# image1.jpg
-# image2.jpg
 # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
 PATH_TO_TEST_IMAGES_DIR = 'test_images'
-TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 3) ]
+TEST_IMAGE_PATHS = [ os.path.join(PATH_TO_TEST_IMAGES_DIR, 'image{}.jpg'.format(i)) for i in range(1, 6) ]
 
 # Size, in inches, of the output images.
 IMAGE_SIZE = (12, 8)
 
 
-# In[ ]:
+# In[66]:
 
 
 def run_inference_for_single_image(image, graph):
@@ -188,7 +179,7 @@ def run_inference_for_single_image(image, graph):
   return output_dict
 
 
-# In[ ]:
+# In[67]:
 
 
 for image_path in TEST_IMAGE_PATHS:
